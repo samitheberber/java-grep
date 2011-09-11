@@ -1,4 +1,5 @@
-/builds
+/build
+/dist
 *.pdf
 *.log
 *.aux
