@@ -1,5 +1,8 @@
+# Building stuff
 /build
 /dist
+
+# Documentation stuff
 *.pdf
 *.log
 *.aux
