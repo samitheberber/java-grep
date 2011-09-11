@@ -1,0 +1,1 @@
+javac -sourcepath sources -classpath classes sources/Grep.java -d classes/

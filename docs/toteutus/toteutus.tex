@@ -1,0 +1,99 @@
+\documentclass[gradu,emptyfirstpagenumber]{tktltiki}
+\usepackage{url}
+
+\begin{document}
+
+\title{GREP - Toteutusdokumentti}
+\author{Sami Saada - saada@cs.helsinki.fi}
+\date{\today}
+\level{Tietorakenteiden harjoitustyö}
+
+\maketitle
+
+\doublespacing
+
+\faculty{Matemaattis-luonnontieteellinen}
+\department{Tietojenkäsittelytieteen laitos}
+\depositeplace{}
+\additionalinformation{}
+\numberofpagesinformation{\numberofpages\ sivua}
+\classification{}
+\keywords{Tietorakenteiden harjoitustyö, GREP}
+
+\begin{abstract}
+Tietorakenteiden harjoitustyön, jonka aiheena GREP, toteutusdokumentti.
+\end{abstract}
+
+\mytableofcontents
+
+\section{Johdanto}
+
+Tämän tietorakenteiden harjoitustyön aiheena oli GREP. Käytännössä ohjelma luo ensin säännöllisestä lausekkeesta tilakoneen, jolla verrataan syötettä. Koneen päädyttyä hyväksyvään tilaan, syöterivi tulostetaan.
+
+\section{Käyttöohje}
+
+Ohjelma täytyy ensin kääntää ennen kuin sitä voi ajaa. Alla on ohjeet kääntämisestä jar-tiedostoksi jasiitä suorittamiseen.
+
+\subsection{Kääntäminen}
+
+Helsingin yliopiston tietojenkäsittelytieteen laitoksen linux-koneissa on ohjelma nimeltään '$ant$'. Tämä on Javan vastine mm. C:n käyttämälle '$make$'-komennolle.
+
+Olen määritellyt antin käyttämään $build.xml$-tiedostoon seuraavat komennot:
+
+\begin{itemize}
+ \item $clean$ - poistaa vanhan käännettyjen tiedostojen hakemiston
+ \item $compile$ - luo käännettyjen tiedostojen hakemiston ja kääntää lähdekoodin sinne
+ \item $jar$ - luo jar-tiedoston käännetyistä tiedostoista
+ \item $clean-build$ - suorittee clean ja jar komennot
+ \item $main$ - suoritetaan, kun ajetaan pelkkä '$ant$', ajaa clean-build komennon
+\end{itemize}
+
+Lyhyesti: Ohjelma kääntyy antamanlla komento '$ant$' hakemistossa, jossa on $build.xml$-tiedosto.
+
+\subsection{Suorittaminen}
+
+Ohjelman voi suorittaa kahdenlaisilla parametreilla, tiedosto syötteenä tai lähdemateriaali putkitettuna.
+
+\begin{itemize}
+ \item $\$ java -jar polku/Grep.jar <regexp> -f <tiedosto>$
+ \item $\$ cat <tiedosto> | java -jar polki/Grep.jar <regexp>$
+\end{itemize}
+
+\section{Toteutus}
+
+Alle on listattu harjoitustyössä käytetyt tietorakenteet.
+
+\subsection{Äärellinen automaatti}
+
+Äärellinen automaatti koostuu tiloista, jotka ovat joko hyväksyviä tai hylkääviä. Automaatti muistaa vain nykyisen syötteen ja sen perusteella liikkuu tilassa eteenpäin. Tilassa on lista siitä pois johtavista reiteistä. Reitissä on määritelty reitin hyväksyvä syöte sekä määränpäätila.
+
+Automaatti vie tilaa sen tilojen määrän sekä tilasiirtymien verran.
+
+\subsection{AVL-puu}
+
+AVL-puulta vaaditaan, että se toteuttaa seuraavan tasapainoehdon: minkä tahansa solmun vasemman ja oikean alipuun korkeuksien erotus on joko -1, 0 tai 1.
+
+Muuten AVL-puu on tavallinen binääripuu, eli sillä on avain, vasen ja oikea lapsi, sekä vanhempi.
+
+AVL-puun tavoite on toteuttaa joukko-operaation ajassa O(log n).
+
+\subsection{Linkitetty lista}
+
+Lista on käytössä lineaarisia toimintoja vaativissa kohdissa, missä lista pitää käydä joka tapauksessa lävitse.
+
+Jossain tapauksissa listan olisi voinut korvata hajautustaululla, jolloin olisi ollut nopeampi hakea tietoa.
+
+\section{Testitulokset}
+
+Suoritin muutaman testin, jotka voi suorittaa itse ajamalla '$\$ ant tests$'. Testimateriaali on $test/argfile.txt$ Testit näyttäisivät toimivan oikein.
+
+Kaikki tietorakenteet ovat testattu ja jos jokin ei toimi oikein, Java heittää poikkeuksen. Näin ollen vääränlaista säännöllistä lauseketta ei voi antaa.
+
+\section{Lähteet}
+
+Lähdemateriaalina käytin Tietorakenteet ja Laskennan mallit -kurssien kurssimateriaalin lisäksi sivustoa \url{http://swtch.com/~rsc/regexp/regexp1.html} ja seuraavia Wikipedian artikkeleita: \url{http://en.wikipedia.org/wiki/Regular_expression}, \url{http://en.wikipedia.org/wiki/Finite_state_automata}, \url{http://en.wikipedia.org/wiki/Binary_tree}, \url{http://en.wikipedia.org/wiki/Binary_search_tree}, \url{http://en.wikipedia.org/wiki/Self-balancing_binary_search_tree}, \url{http://en.wikipedia.org/wiki/AVL_tree}.
+
+\lastpage
+\appendices
+
+\end{document}

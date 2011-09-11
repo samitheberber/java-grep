@@ -1,0 +1,105 @@
+<project name="Grep" basedir="." default="main">
+
+    <property name="src.dir" value="sources" />
+    <property name="build.dir" value="builds" />
+    <property name="classes.dir" value="${build.dir}/classes" />
+    <property name="jar.dir" value="${build.dir}/jar" />
+    <property name="main-class" value="Grep" />
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}"/>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${jar.dir}"/>
+        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="test1" depends="jar">
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true">
+            <arg value="^testi$"/>
+            <arg value="-f"/>
+            <arg value="test/argfile.txt"/>
+        </java>
+    </target>
+
+    <target name="test2" depends="jar">
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true">
+            <arg value="^testi"/>
+            <arg value="-f"/>
+            <arg value="test/argfile.txt"/>
+        </java>
+    </target>
+
+    <target name="test3" depends="jar">
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true">
+            <arg value="testi$"/>
+            <arg value="-f"/>
+            <arg value="test/argfile.txt"/>
+        </java>
+    </target>
+
+    <target name="test4" depends="jar">
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true">
+            <arg value="t.sti"/>
+            <arg value="-f"/>
+            <arg value="test/argfile.txt"/>
+        </java>
+    </target>
+
+    <target name="test5" depends="jar">
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true">
+            <arg value="te*sti"/>
+            <arg value="-f"/>
+            <arg value="test/argfile.txt"/>
+        </java>
+    </target>
+
+    <target name="test6" depends="jar">
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true">
+            <arg value="te+sti"/>
+            <arg value="-f"/>
+            <arg value="test/argfile.txt"/>
+        </java>
+    </target>
+
+    <target name="test7" depends="jar">
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true">
+            <arg value="t[es]*ti"/>
+            <arg value="-f"/>
+            <arg value="test/argfile.txt"/>
+        </java>
+    </target>
+
+    <target name="test8" depends="jar">
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true">
+            <arg value="t[es]+ti"/>
+            <arg value="-f"/>
+            <arg value="test/argfile.txt"/>
+        </java>
+    </target>
+
+    <target name="test9" depends="jar">
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true">
+            <arg value="te?sti"/>
+            <arg value="-f"/>
+            <arg value="test/argfile.txt"/>
+        </java>
+    </target>
+
+    <target name="tests" depends="clean,test1,test2,test3,test4,test5,test6,test7,test8,test9"/>
+
+    <target name="clean-build" depends="clean,jar" />
+
+    <target name="main" depends="clean-build" />
+
+</project>

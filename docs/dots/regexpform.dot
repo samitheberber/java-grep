@@ -1,0 +1,49 @@
+digraph {
+
+    state_q0[label="q0", peripheries=2];
+    state_alnum[label="Alnum", peripheries=2];
+    state_alnumS[label="AlnumStar", peripheries=2];
+    state_bracketB[label="BracketB"];
+    state_bracketA[label="BracketA"];
+    state_bracketE[label="BracketE", peripheries=2];
+    state_startline[label="Startline"];
+    state_endline[label="Endline", peripheries=2];
+    state_fail[label="Fail"];
+
+    state_q0->state_alnum[label=" :alnum:, . "];
+    state_q0->state_bracketB[label=" [ "];
+    state_q0->state_startline[label=" ^ "];
+    state_q0->state_endline[label=" $ "];
+    state_q0->state_fail[label=" *, ] "];
+
+    state_alnum->state_alnum[label=" :alnum:, . "];
+    state_alnum->state_alnumS[label=" * "];
+    state_alnum->state_endline[label=" $ "];
+    state_alnum->state_bracketB[label=" [ "];
+    state_alnum->state_fail[label=" ^, ] "];
+
+    state_alnumS->state_alnum[label=" :alnum:, . "];
+    state_alnumS->state_bracketB[label=" [ "];
+    state_alnumS->state_endline[label=" $ "];
+    state_alnumS->state_fail[label=" ^, ], * "];
+
+    state_startline->state_alnum[label=" :alnum:, . "];
+    state_startline->state_bracketB[label=" [ "];
+    state_startline->state_endline[label=" $ "];
+    state_startline->state_fail[label=" ^, *, ] "];
+
+    state_bracketB->state_bracketA[label=" :alnum:, . "];
+    state_bracketB->state_fail[label=" ^, [, ], *, $ "];
+
+    state_bracketA->state_bracketA[label=" :alnum:, . "];
+    state_bracketA->state_bracketE[label=" ] "];
+    state_bracketA->state_fail[label=" ^, $, [, * "];
+
+    state_bracketE->state_alnum[label=" :alnum:, . "];
+    state_bracketE->state_bracketB[label=" [ "];
+    state_bracketE->state_endline[label=" $ "];
+    state_bracketE->state_fail[label=" ^, ], * "];
+
+    state_fail->state_fail[label=" Any "];
+    state_endline->state_fail[label=" Any "];
+}
