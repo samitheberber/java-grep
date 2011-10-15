@@ -3,6 +3,7 @@
     <property name="src.dir" location="src" />
     <property name="test.dir" location="test" />
     <property name="build.dir" location="build" />
+    <property name="lib.dir" location="lib" />
     <property name="classes.dir" location="${build.dir}/classes" />
     <property name="testclasses.dir" location="${build.dir}/test-classes" />
     <property name="report.dir" location="${build.dir}/junitreport" />
@@ -14,6 +15,11 @@
 
     <path id="classpath.test">
         <pathelement location="${testclasses.dir}" />
+        <fileset dir="${lib.dir}">
+            <include name="easymock-3.0.jar"/>
+            <include name="objenesis-1.2.jar"/>
+            <include name="cglib-nodep-2.2.2.jar"/>
+        </fileset>
         <path refid="classpath.base" />
     </path>
 
