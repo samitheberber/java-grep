@@ -5,6 +5,7 @@
     <property name="build.dir" location="build" />
     <property name="classes.dir" location="${build.dir}/classes" />
     <property name="testclasses.dir" location="${build.dir}/test-classes" />
+    <property name="report.dir" location="${build.dir}/junitreport" />
     <property name="dist.dir" location="dist" />
 
     <path id="classpath.base" path="${classpath}">
@@ -26,6 +27,7 @@
         <mkdir dir="${build.dir}"/>
         <mkdir dir="${classes.dir}"/>
         <mkdir dir="${testclasses.dir}"/>
+        <mkdir dir="${report.dir}"/>
         <mkdir dir="${dist.dir}"/>
     </target>
 
@@ -49,8 +51,12 @@
     </target>
 
     <target name="junit" depends="compile-test">
-        <junit printsummary="yes">
+        <junit printsummary="yes" haltonfailure="yes">
             <classpath refid="classpath.test" />
+            <formatter type="plain" />
+            <batchtest fork="yes" todir="${report.dir}">
+                <fileset dir="${testclasses.dir}" includes="**/*Test.class"/>
+            </batchtest>
         </junit>
     </target>
 
