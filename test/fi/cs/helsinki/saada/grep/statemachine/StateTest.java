@@ -10,7 +10,31 @@ public class StateTest {
         return new TestSuite(StateTest.class.getDeclaredClasses());
     }
 
-    public static class StateAcceptance extends TestCase {
+    public static class Name extends TestCase {
+
+        public void testDefaultNameIsEmpty() {
+            State state = new State();
+            assertEquals("", state.getName());
+        }
+
+        public void testNameIsWhatItShouldBe() {
+            State state = new State("foobar");
+            assertEquals("foobar", state.getName());
+        }
+
+        public void testDefaultWorksWithAccepting() {
+            State state = new State(true);
+            assertEquals("", state.getName());
+        }
+
+        public void testCustomWorksWithAccepting() {
+            State state = new State(true, "foobar");
+            assertEquals("foobar", state.getName());
+        }
+
+    }
+
+    public static class Acceptance extends TestCase {
 
         public void testStateIsNotAcceptingByDefault() {
             State state = new State();
