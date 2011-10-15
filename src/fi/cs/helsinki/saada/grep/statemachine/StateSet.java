@@ -16,4 +16,10 @@ public class StateSet {
         this.count++;
     }
 
+    public void delete(State state) throws Exception {
+        if (this.count() == 0)
+            throw new Exception("no more states");
+        this.count--;
+    }
+
 }
