@@ -10,10 +10,30 @@ public class StateTest {
     return new TestSuite(StateTest.class.getDeclaredClasses());
   }
 
-  public static class StateClass extends TestCase {
+  public static class StateAcceptance extends TestCase {
 
-    public void testStateIsDefined() {
+    public void testStateIsNotAcceptingByDefault() {
       State state = new State();
+      assertFalse(state.isAccepting());
+    }
+
+    public void testStateIsAccepting() {
+      State state = new State(true);
+      assertTrue(state.isAccepting());
+    }
+
+    public void testStateCanBeSetToAccept() {
+      State state = new State();
+      assertFalse(state.isAccepting());
+      state.setAcceptance(true);
+      assertTrue(state.isAccepting());
+    }
+
+    public void testStateCanBeSetToNotAccept() {
+      State state = new State(true);
+      assertTrue(state.isAccepting());
+      state.setAcceptance(false);
+      assertFalse(state.isAccepting());
     }
 
   }
