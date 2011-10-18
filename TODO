@@ -1,1 +1,16 @@
-- Do this ...
+- DFA:
+    - Refactor tests to own file
+    - Create tests for vocabulary
+    - Create tests for delta
+
+- NFA
+    ...
+
+- GNFA
+    ...
+
+- RegExp
+    ...
+
+- Grep
+    ...
