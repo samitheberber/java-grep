@@ -86,7 +86,7 @@ public class AutomatonTest {
 
     public static class DefineDFA extends TestCase {
 
-        private class Automaton {
+        private class DFA{
 
             private StateSet states;
             private Vocabulary vocabulary;
@@ -94,7 +94,7 @@ public class AutomatonTest {
             private State start;
             private StateSet goals;
 
-            public Automaton(StateSet states, Vocabulary vocabulary, Delta delta, State start, StateSet goals) {
+            public DFA(StateSet states, Vocabulary vocabulary, Delta delta, State start, StateSet goals) {
                 this.states = states;
                 this.vocabulary = vocabulary;
                 this.delta = delta;
@@ -144,7 +144,7 @@ public class AutomatonTest {
         private State q1;
         private State q2;
         private State q3;
-        private Automaton automate;
+        private DFA automate;
 
         public void setUp() {
             this.Q = createMock(StateSet.class);
@@ -155,7 +155,7 @@ public class AutomatonTest {
             this.q1 = createMock(State.class);
             this.q2 = createMock(State.class);
             this.q3 = createMock(State.class);
-            this.automate = new Automaton(Q, sigma, delta, q0, F);
+            this.automate = new DFA(Q, sigma, delta, q0, F);
         }
 
         public void test__we_can_create_dfa() {
