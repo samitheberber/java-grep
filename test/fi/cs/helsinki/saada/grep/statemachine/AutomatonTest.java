@@ -8,6 +8,10 @@ import static org.easymock.EasyMock.*;
 
 //TODO: Move this away
 class Vocabulary {
+
+    public boolean includes(char c) {
+        return true;
+    }
 }
 
 public class AutomatonTest {
@@ -85,12 +89,14 @@ public class AutomatonTest {
         private class Automaton {
 
             private StateSet states;
+            private Vocabulary vocabulary;
             private Delta delta;
             private State start;
             private StateSet goals;
 
             public Automaton(StateSet states, Vocabulary vocabulary, Delta delta, State start, StateSet goals) {
                 this.states = states;
+                this.vocabulary = vocabulary;
                 this.delta = delta;
                 this.start = start;
                 this.goals = goals;
@@ -103,10 +109,16 @@ public class AutomatonTest {
             private State result(String characters) throws Exception {
                 State current = this.start;
                 for(char c : characters.toCharArray()) {
+                    this.validateInput(c);
                     current = this.delta.calculate(current, c);
                     this.ensure(current);
                 }
                 return current;
+            }
+
+            private void validateInput(char c) throws Exception {
+                if (!this.vocabulary.includes(c))
+                    throw new Exception("Character not in vocabulary");
             }
 
             private void ensure(State state) throws Exception {
@@ -165,6 +177,13 @@ public class AutomatonTest {
         }
 
         public void test__further_state_accepts_and_automate_runs_successful_with_string_that_belongs_to_the_language() throws Exception {
+            expect(this.sigma.includes('f')).andReturn(true);
+            expect(this.sigma.includes('o')).andReturn(true);
+            expect(this.sigma.includes('o')).andReturn(true);
+            expect(this.sigma.includes('b')).andReturn(true);
+            expect(this.sigma.includes('a')).andReturn(true);
+            expect(this.sigma.includes('r')).andReturn(true);
+            replay(this.sigma);
             expect(this.delta.calculate(this.q0, 'f')).andReturn(this.q0);
             expect(this.delta.calculate(this.q0, 'o')).andReturn(this.q1);
             expect(this.delta.calculate(this.q1, 'o')).andReturn(this.q3);
@@ -182,12 +201,19 @@ public class AutomatonTest {
             expect(this.F.includes(this.q2)).andReturn(true);
             replay(this.F);
             assertTrue(this.automate.run("foobar"));
+            verify(this.sigma);
             verify(this.delta);
             verify(this.Q);
             verify(this.F);
         }
 
         public void test__further_state_rejects_and_automate_runs_unsuccessful_with_string_that_doesnt_belong_to_the_language() throws Exception {
+            expect(this.sigma.includes('f')).andReturn(true);
+            expect(this.sigma.includes('o')).andReturn(true);
+            expect(this.sigma.includes('b')).andReturn(true);
+            expect(this.sigma.includes('a')).andReturn(true);
+            expect(this.sigma.includes('r')).andReturn(true);
+            replay(this.sigma);
             expect(this.delta.calculate(this.q0, 'f')).andReturn(this.q0);
             expect(this.delta.calculate(this.q0, 'o')).andReturn(this.q1);
             expect(this.delta.calculate(this.q1, 'b')).andReturn(this.q3);
@@ -203,6 +229,7 @@ public class AutomatonTest {
             expect(this.F.includes(this.q3)).andReturn(false);
             replay(this.F);
             assertFalse(this.automate.run("fobar"));
+            verify(this.sigma);
             verify(this.delta);
             verify(this.Q);
             verify(this.F);
@@ -210,16 +237,39 @@ public class AutomatonTest {
 
         public void test__met_not_belonging_state_so_panic() {
             State q4 = createMock(State.class);
+            expect(this.sigma.includes('f')).andReturn(true);
+            expect(this.sigma.includes('u')).andReturn(true);
+            replay(this.sigma);
             expect(this.delta.calculate(this.q0, 'f')).andReturn(this.q0);
-            expect(this.Q.includes(this.q0)).andReturn(true);
             expect(this.delta.calculate(this.q0, 'u')).andReturn(q4);
-            expect(this.Q.includes(q4)).andReturn(false);
             replay(this.delta);
+            expect(this.Q.includes(this.q0)).andReturn(true);
+            expect(this.Q.includes(q4)).andReturn(false);
             replay(this.Q);
             try {
                 this.automate.run("fubar");
                 fail("Exception must be raised");
             } catch(Exception e) {
+                verify(this.sigma);
+                verify(this.delta);
+                verify(this.Q);
+            }
+        }
+
+        public void test__met_not_belonging_char_so_panic() {
+            State q4 = createMock(State.class);
+            expect(this.sigma.includes('f')).andReturn(true);
+            expect(this.sigma.includes('u')).andReturn(false);
+            replay(this.sigma);
+            expect(this.delta.calculate(this.q0, 'f')).andReturn(this.q0);
+            replay(this.delta);
+            expect(this.Q.includes(this.q0)).andReturn(true);
+            replay(this.Q);
+            try {
+                this.automate.run("fubar");
+                fail("Exception must be raised");
+            } catch(Exception e) {
+                verify(this.sigma);
                 verify(this.delta);
                 verify(this.Q);
             }
