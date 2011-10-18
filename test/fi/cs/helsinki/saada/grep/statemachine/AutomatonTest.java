@@ -6,14 +6,6 @@ import junit.framework.TestSuite;
 
 import static org.easymock.EasyMock.*;
 
-//TODO: Move this away
-class Vocabulary {
-
-    public boolean includes(char c) {
-        return true;
-    }
-}
-
 public class AutomatonTest {
 
     public static Test suite() {
@@ -86,60 +78,10 @@ public class AutomatonTest {
 
     public static class DefineDFA extends TestCase {
 
-        private class DFA{
-
-            private StateSet states;
-            private Vocabulary vocabulary;
-            private Delta delta;
-            private State start;
-            private StateSet goals;
-
-            public DFA(StateSet states, Vocabulary vocabulary, Delta delta, State start, StateSet goals) {
-                this.states = states;
-                this.vocabulary = vocabulary;
-                this.delta = delta;
-                this.start = start;
-                this.goals = goals;
-            }
-
-            public boolean run(String characters) throws Exception {
-                return this.goals.includes(this.result(characters));
-            }
-
-            private State result(String characters) throws Exception {
-                State current = this.start;
-                for(char c : characters.toCharArray()) {
-                    this.validateInput(c);
-                    current = this.delta.calculate(current, c);
-                    this.ensure(current);
-                }
-                return current;
-            }
-
-            private void validateInput(char c) throws Exception {
-                if (!this.vocabulary.includes(c))
-                    throw new Exception("Character not in vocabulary");
-            }
-
-            private void ensure(State state) throws Exception {
-                if (!this.states.includes(state))
-                    throw new Exception("Undeclared state met");
-            }
-
-        }
-
-        private class Delta {
-
-            public State calculate(State state, char character) {
-                return null;
-            }
-
-        }
-
         private StateSet Q;
         private StateSet F;
         private Vocabulary sigma;
-        private Delta delta;
+        private DeltaDFA delta;
         private State q0;
         private State q1;
         private State q2;
@@ -150,7 +92,7 @@ public class AutomatonTest {
             this.Q = createMock(StateSet.class);
             this.F = createMock(StateSet.class);
             this.sigma = createMock(Vocabulary.class);
-            this.delta = createMock(Delta.class);
+            this.delta = createMock(DeltaDFA.class);
             this.q0 = createMock(State.class);
             this.q1 = createMock(State.class);
             this.q2 = createMock(State.class);
