@@ -6,6 +6,10 @@ import junit.framework.TestSuite;
 
 import static org.easymock.EasyMock.*;
 
+//TODO: Move this away
+class Vocabulary {
+}
+
 public class AutomatonTest {
 
     public static Test suite() {
@@ -19,9 +23,6 @@ public class AutomatonTest {
             public StateSet calculate(State state, String characters) {
                 return null;
             }
-        }
-
-        private class Vocabulary {
         }
 
         private class Automaton {
@@ -77,6 +78,32 @@ public class AutomatonTest {
             verify(this.delta);
         }
 
+    }
+
+    public static class DefineDFA extends TestCase {
+
+        private class Automaton {
+
+            public Automaton(StateSet states, Vocabulary vocabulary, Delta delta, State start, StateSet goals) {
+            }
+
+        }
+
+        private class Delta {
+        }
+
+        public void test__we_can_create_dfa() {
+            StateSet Q = createMock(StateSet.class);
+            StateSet F = createMock(StateSet.class);
+            Vocabulary sigma = createMock(Vocabulary.class);
+            Delta delta = createMock(Delta.class);
+            State q0 = createMock(State.class);
+            State q1 = createMock(State.class);
+            State q2 = createMock(State.class);
+            State q3 = createMock(State.class);
+            Automaton automate = new Automaton(Q, sigma, delta, q0, F);
+            assertNotNull(automate);
+        }
     }
 
 }
