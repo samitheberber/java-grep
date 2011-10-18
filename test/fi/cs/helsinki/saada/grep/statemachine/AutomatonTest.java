@@ -12,7 +12,7 @@ public class AutomatonTest {
         return new TestSuite(AutomatonTest.class.getDeclaredClasses());
     }
 
-    public static class Initializing extends TestCase {
+    public static class ExampleAutomaton extends TestCase {
 
         private class Delta {
 
