@@ -95,14 +95,22 @@ public class AutomatonTest {
             }
 
             public boolean run(String characters) {
-                return this.goals.includes(this.delta.calculate(this.start, characters));
+                return this.goals.includes(this.result(characters));
+            }
+
+            private State result(String characters) {
+                State current = this.start;
+                for(char c : characters.toCharArray()) {
+                    current = this.delta.calculate(current, c);
+                }
+                return current;
             }
 
         }
 
         private class Delta {
 
-            public State calculate(State state, String characters) {
+            public State calculate(State state, char character) {
                 return null;
             }
 
@@ -135,45 +143,44 @@ public class AutomatonTest {
         }
 
         public void test__first_state_accepts_and_automate_runs_successful_with_empty_string() {
-            String toRun = "";
-            expect(this.delta.calculate(this.q0, toRun)).andReturn(this.q0);
-            replay(this.delta);
             expect(this.F.includes(this.q0)).andReturn(true);
             replay(this.F);
-            assertTrue(this.automate.run(toRun));
-            verify(this.delta);
+            assertTrue(this.automate.run(""));
             verify(this.F);
         }
 
         public void test__first_state_rejects_and_automate_runs_unsuccessful_with_empty_string() {
-            String toRun = "";
-            expect(this.delta.calculate(this.q0, toRun)).andReturn(this.q0);
-            replay(this.delta);
             expect(this.F.includes(this.q0)).andReturn(false);
             replay(this.F);
-            assertFalse(this.automate.run(toRun));
-            verify(this.delta);
+            assertFalse(this.automate.run(""));
             verify(this.F);
         }
 
         public void test__further_state_accepts_and_automate_runs_successful_with_string_that_belongs_to_the_language() {
-            String toRun = "foobar";
-            expect(this.delta.calculate(this.q0, toRun)).andReturn(this.q2);
+            expect(this.delta.calculate(this.q0, 'f')).andReturn(this.q0);
+            expect(this.delta.calculate(this.q0, 'o')).andReturn(this.q1);
+            expect(this.delta.calculate(this.q1, 'o')).andReturn(this.q3);
+            expect(this.delta.calculate(this.q3, 'b')).andReturn(this.q1);
+            expect(this.delta.calculate(this.q1, 'a')).andReturn(this.q0);
+            expect(this.delta.calculate(this.q0, 'r')).andReturn(this.q2);
             replay(this.delta);
             expect(this.F.includes(this.q2)).andReturn(true);
             replay(this.F);
-            assertTrue(this.automate.run(toRun));
+            assertTrue(this.automate.run("foobar"));
             verify(this.delta);
             verify(this.F);
         }
 
         public void test__further_state_rejects_and_automate_runs_unsuccessful_with_string_that_doesnt_belong_to_the_language() {
-            String toRun = "fobar";
-            expect(this.delta.calculate(this.q0, toRun)).andReturn(this.q3);
+            expect(this.delta.calculate(this.q0, 'f')).andReturn(this.q0);
+            expect(this.delta.calculate(this.q0, 'o')).andReturn(this.q1);
+            expect(this.delta.calculate(this.q1, 'b')).andReturn(this.q3);
+            expect(this.delta.calculate(this.q3, 'a')).andReturn(this.q2);
+            expect(this.delta.calculate(this.q2, 'r')).andReturn(this.q3);
             replay(this.delta);
             expect(this.F.includes(this.q3)).andReturn(false);
             replay(this.F);
-            assertFalse(this.automate.run(toRun));
+            assertFalse(this.automate.run("fobar"));
             verify(this.delta);
             verify(this.F);
         }
