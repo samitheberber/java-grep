@@ -92,17 +92,30 @@ public class AutomatonTest {
         private class Delta {
         }
 
+        private StateSet Q;
+        private StateSet F;
+        private Vocabulary sigma;
+        private Delta delta;
+        private State q0;
+        private State q1;
+        private State q2;
+        private State q3;
+        private Automaton automate;
+
+        public void setUp() {
+            this.Q = createMock(StateSet.class);
+            this.F = createMock(StateSet.class);
+            this.sigma = createMock(Vocabulary.class);
+            this.delta = createMock(Delta.class);
+            this.q0 = createMock(State.class);
+            this.q1 = createMock(State.class);
+            this.q2 = createMock(State.class);
+            this.q3 = createMock(State.class);
+            this.automate = new Automaton(Q, sigma, delta, q0, F);
+        }
+
         public void test__we_can_create_dfa() {
-            StateSet Q = createMock(StateSet.class);
-            StateSet F = createMock(StateSet.class);
-            Vocabulary sigma = createMock(Vocabulary.class);
-            Delta delta = createMock(Delta.class);
-            State q0 = createMock(State.class);
-            State q1 = createMock(State.class);
-            State q2 = createMock(State.class);
-            State q3 = createMock(State.class);
-            Automaton automate = new Automaton(Q, sigma, delta, q0, F);
-            assertNotNull(automate);
+            assertNotNull(this.automate);
         }
     }
 
