@@ -84,12 +84,28 @@ public class AutomatonTest {
 
         private class Automaton {
 
+            private Delta delta;
+            private State start;
+            private StateSet goals;
+
             public Automaton(StateSet states, Vocabulary vocabulary, Delta delta, State start, StateSet goals) {
+                this.delta = delta;
+                this.start = start;
+                this.goals = goals;
+            }
+
+            public boolean run(String characters) {
+                return this.goals.includes(this.delta.calculate(this.start, characters));
             }
 
         }
 
         private class Delta {
+
+            public State calculate(State state, String characters) {
+                return null;
+            }
+
         }
 
         private StateSet Q;
@@ -117,6 +133,17 @@ public class AutomatonTest {
         public void test__we_can_create_dfa() {
             assertNotNull(this.automate);
         }
+
+        public void test__first_state_accepts_and_automate_run_successful_with_empty_string() {
+            expect(this.delta.calculate(this.q0, "")).andReturn(this.q0);
+            replay(this.delta);
+            expect(this.F.includes(this.q0)).andReturn(true);
+            replay(this.F);
+            assertTrue(this.automate.run(""));
+            verify(this.delta);
+            verify(this.F);
+        }
+
     }
 
 }
