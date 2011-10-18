@@ -134,12 +134,46 @@ public class AutomatonTest {
             assertNotNull(this.automate);
         }
 
-        public void test__first_state_accepts_and_automate_run_successful_with_empty_string() {
-            expect(this.delta.calculate(this.q0, "")).andReturn(this.q0);
+        public void test__first_state_accepts_and_automate_runs_successful_with_empty_string() {
+            String toRun = "";
+            expect(this.delta.calculate(this.q0, toRun)).andReturn(this.q0);
             replay(this.delta);
             expect(this.F.includes(this.q0)).andReturn(true);
             replay(this.F);
-            assertTrue(this.automate.run(""));
+            assertTrue(this.automate.run(toRun));
+            verify(this.delta);
+            verify(this.F);
+        }
+
+        public void test__first_state_rejects_and_automate_runs_unsuccessful_with_empty_string() {
+            String toRun = "";
+            expect(this.delta.calculate(this.q0, toRun)).andReturn(this.q0);
+            replay(this.delta);
+            expect(this.F.includes(this.q0)).andReturn(false);
+            replay(this.F);
+            assertFalse(this.automate.run(toRun));
+            verify(this.delta);
+            verify(this.F);
+        }
+
+        public void test__further_state_accepts_and_automate_runs_successful_with_string_that_belongs_to_the_language() {
+            String toRun = "foobar";
+            expect(this.delta.calculate(this.q0, toRun)).andReturn(this.q2);
+            replay(this.delta);
+            expect(this.F.includes(this.q2)).andReturn(true);
+            replay(this.F);
+            assertTrue(this.automate.run(toRun));
+            verify(this.delta);
+            verify(this.F);
+        }
+
+        public void test__further_state_rejects_and_automate_runs_unsuccessful_with_string_that_doesnt_belong_to_the_language() {
+            String toRun = "fobar";
+            expect(this.delta.calculate(this.q0, toRun)).andReturn(this.q3);
+            replay(this.delta);
+            expect(this.F.includes(this.q3)).andReturn(false);
+            replay(this.F);
+            assertFalse(this.automate.run(toRun));
             verify(this.delta);
             verify(this.F);
         }
