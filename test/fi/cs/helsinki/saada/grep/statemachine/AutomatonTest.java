@@ -21,30 +21,20 @@ public class AutomatonTest {
             }
         }
 
-        private class Automaton {
+        private class PlainAutomaton extends AbstractAutomaton {
 
-            private StateSet states;
-            private Vocabulary vocabulary;
-            private Delta delta;
-            private StateSet acceptingStates;
-            private StateSet currentStates;
-
-            public Automaton(
+            public PlainAutomaton(
                     StateSet states,
                     Vocabulary vocabulary,
                     Delta delta,
                     State startingState,
                     StateSet acceptingStates
                     ) {
-                this.states = states;
-                this.vocabulary = vocabulary;
-                this.delta = delta;
-                this.acceptingStates = acceptingStates;
-                this.currentStates = this.delta.calculate(startingState, Vocabulary.EPSILON);
-            }
-
-            public StateSet currentStates() {
-                return this.currentStates;
+                this.setStates(states);
+                this.setVocabulary(vocabulary);
+                this.setDelta(delta);
+                this.setAcceptingStates(acceptingStates);
+                this.setCurrentStates(delta.calculate(startingState, Vocabulary.EPSILON));
             }
 
         }
@@ -68,7 +58,7 @@ public class AutomatonTest {
             startingStates.add(this.startingState);
             expect(this.delta.calculate(this.startingState, Vocabulary.EPSILON)).andReturn(startingStates);
             replay(this.delta);
-            Automaton automate = new Automaton(this.states, this.vocabulary, this.delta, this.startingState, this.acceptingStates);
+            Automaton automate = new PlainAutomaton(this.states, this.vocabulary, this.delta, this.startingState, this.acceptingStates);
             assertNotNull(automate.currentStates());
             assertTrue(automate.currentStates().includes(this.startingState));
             verify(this.delta);
