@@ -14,10 +14,6 @@ public class AutomatonTest {
 
     public static class ExampleAutomaton extends TestCase {
 
-        private interface Delta {
-            public StateSet calculate(State state, char character);
-        }
-
         private class ExampleDelta implements Delta {
 
             public StateSet calculate(State state, char character) {
