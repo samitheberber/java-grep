@@ -14,9 +14,13 @@ public class AutomatonTest {
 
     public static class ExampleAutomaton extends TestCase {
 
-        private class Delta {
+        private interface Delta {
+            public StateSet calculate(State state, char character);
+        }
 
-            public StateSet calculate(State state, String characters) {
+        private class ExampleDelta implements Delta {
+
+            public StateSet calculate(State state, char character) {
                 return null;
             }
         }
@@ -40,7 +44,7 @@ public class AutomatonTest {
                 this.vocabulary = vocabulary;
                 this.delta = delta;
                 this.acceptingStates = acceptingStates;
-                this.currentStates = this.delta.calculate(startingState, null);
+                this.currentStates = this.delta.calculate(startingState, Vocabulary.EPSILON);
             }
 
             public StateSet currentStates() {
@@ -66,7 +70,7 @@ public class AutomatonTest {
         public void test__starting_state_should_belongs_to_first_states() throws Exception {
             StateSet startingStates = new StateSet();
             startingStates.add(this.startingState);
-            expect(this.delta.calculate(this.startingState, null)).andReturn(startingStates);
+            expect(this.delta.calculate(this.startingState, Vocabulary.EPSILON)).andReturn(startingStates);
             replay(this.delta);
             Automaton automate = new Automaton(this.states, this.vocabulary, this.delta, this.startingState, this.acceptingStates);
             assertNotNull(automate.currentStates());
