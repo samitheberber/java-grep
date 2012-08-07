@@ -1,6 +1,6 @@
 package fi.cs.helsinki.saada.grep.statemachine;
 
-public class DFA{
+public class DFA extends AbstractAutomaton {
 
     private StateSet states;
     private Vocabulary vocabulary;
