@@ -26,8 +26,12 @@ public class StateSet implements DeltaResult, Set<State> {
         return false;
     }
 
-    public boolean addAll(Collection states) {
-        return false;
+    public boolean addAll(Collection<? extends State> states) {
+        boolean changed_state = false;
+        for (State state : states) {
+            changed_state = this.add(state) || changed_state;
+        }
+        return changed_state;
     }
 
     public boolean containsAll(Collection states) {

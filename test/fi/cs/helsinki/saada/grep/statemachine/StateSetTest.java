@@ -6,6 +6,8 @@ import junit.framework.TestSuite;
 
 import static org.easymock.EasyMock.*;
 
+import java.util.LinkedList;
+
 public class StateSetTest {
 
     public static Test suite() {
@@ -47,6 +49,14 @@ public class StateSetTest {
             assertEquals(1, this.set.size());
             this.set.add(this.state1);
             assertEquals(1, this.set.size());
+        }
+
+        public void test__it_should_insert_states_from_collection() {
+            LinkedList<State> collection = new LinkedList<State>();
+            collection.add(state1);
+            collection.add(state2);
+            assertTrue(this.set.addAll(collection));
+            assertEquals(2, this.set.size());
         }
 
     }
