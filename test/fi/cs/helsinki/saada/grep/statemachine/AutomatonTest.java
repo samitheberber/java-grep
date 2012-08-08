@@ -50,11 +50,7 @@ public class AutomatonTest {
         }
 
         public void test__can_be_constructed() throws Exception {
-            StateSet startingStates = new StateSet();
-            startingStates.add(this.startingState);
             Automaton automate = new PlainAutomaton(this.states, this.vocabulary, this.delta, this.startingState, this.acceptingStates);
-            assertNotNull(automate.getCurrentStates());
-            assertTrue(automate.getCurrentStates().contains(this.startingState));
         }
 
     }

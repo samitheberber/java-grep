@@ -5,44 +5,35 @@ public abstract class AbstractAutomaton implements Automaton {
     private StateSet states;
     private Vocabulary vocabulary;
     private Delta delta;
+    private State startingState;
     private StateSet acceptingStates;
-    private StateSet currentStates;
 
     public AbstractAutomaton(StateSet states, Vocabulary vocabulary, Delta delta, State start, StateSet acceptingStates) {
         this.states = states;
         this.vocabulary = vocabulary;
         this.delta = delta;
-        this.currentStates = new StateSet();
-        this.currentStates.add(start);
+        this.startingState = start;
         this.acceptingStates = acceptingStates;
     }
 
-    public StateSet getCurrentStates() throws Exception {
-        return this.currentStates;
+    public StateSet getStates() {
+        return this.states;
     }
 
-    public State getCurrentState() throws Exception {
-        throw new Exception("use getCurrentStates()");
+    public Vocabulary getVocabulary() {
+        return this.vocabulary;
     }
 
-    protected void setStates(StateSet states) {
-        this.states = states;
+    public Delta getDelta() {
+        return this.delta;
     }
 
-    protected void setVocabulary(Vocabulary vocabulary) {
-        this.vocabulary = vocabulary;
+    public State getStartingState() {
+        return this.startingState;
     }
 
-    protected DeltaResult delta(State state, char letter) {
-        return this.delta.calculate(state, letter);
-    }
-
-    protected StateSet getAcceptingStates() {
+    public StateSet getAcceptingStates() {
         return this.acceptingStates;
-    }
-
-    protected void setCurrentStates(StateSet currentStates) {
-        this.currentStates = currentStates;
     }
 
 }
