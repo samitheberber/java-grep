@@ -24,7 +24,7 @@ public class DFA extends AbstractAutomaton {
         State current = this.start;
         for(char c : characters.toCharArray()) {
             this.validateInput(c);
-            current = this.delta.calculate(current, c);
+            current = (State) this.delta.calculate(current, c);
             this.ensure(current);
         }
         return current;

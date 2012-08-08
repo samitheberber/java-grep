@@ -1,6 +1,6 @@
 package fi.cs.helsinki.saada.grep.statemachine;
 
-public class State {
+public class State implements DeltaResult {
 
     private boolean accepting;
     private String name;

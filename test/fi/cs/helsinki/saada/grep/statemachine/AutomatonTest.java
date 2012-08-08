@@ -16,7 +16,7 @@ public class AutomatonTest {
 
         private class ExampleDelta implements Delta {
 
-            public StateSet calculate(State state, char character) {
+            public DeltaResult calculate(State state, char character) {
                 return null;
             }
         }
@@ -34,7 +34,7 @@ public class AutomatonTest {
                 this.setVocabulary(vocabulary);
                 this.setDelta(delta);
                 this.setAcceptingStates(acceptingStates);
-                this.setCurrentStates(delta.calculate(startingState, Vocabulary.EPSILON));
+                this.setCurrentStates((StateSet) delta.calculate(startingState, Vocabulary.EPSILON));
             }
 
         }

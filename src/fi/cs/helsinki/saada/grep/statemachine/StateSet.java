@@ -1,6 +1,6 @@
 package fi.cs.helsinki.saada.grep.statemachine;
 
-public class StateSet {
+public class StateSet implements DeltaResult {
 
     private int count;
     private State[] states;
