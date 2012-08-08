@@ -55,15 +55,15 @@ public class StateSet implements DeltaResult, Set<State> {
     }
 
     public <T> T[] toArray(T[] type_array) {
-        return null;
-    }
-
-    public State[] toArray() {
-        State[] states_copy = new State[this.size()];
+        T[] states_copy = (T[]) new Object[this.size()];
         for(int i=0; i < this.size(); i++) {
-            states_copy[i] = this.states[i];
+            states_copy[i] = (T) this.states[i];
         }
         return states_copy;
+    }
+
+    public Object[] toArray() {
+        return toArray(new Object[0]);
     }
 
     public Iterator<State> iterator() {
