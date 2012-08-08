@@ -1,27 +1,23 @@
 package fi.cs.helsinki.saada.grep.statemachine;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
+/**
+ *
+ * @author stb
+ */
 public class StateTest {
 
-    public static Test suite() {
-        return new TestSuite(StateTest.class.getDeclaredClasses());
+    @Test
+    public void default_name_is_empty() {
+        State state = new State();
+        assertEquals("", state.toString());
     }
 
-    public static class Name extends TestCase {
-
-        public void test__default_name_is_empty() {
-            State state = new State();
-            assertEquals("", state.toString());
-        }
-
-        public void test__name_is_what_it_should_be() {
-            State state = new State("foobar");
-            assertEquals("foobar", state.toString());
-        }
-
+    @Test
+    public void named_state_gives_set_name() {
+        State state = new State("foobar");
+        assertEquals("foobar", state.toString());
     }
-
 }
