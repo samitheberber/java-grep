@@ -33,7 +33,7 @@ public class StateSetTest {
             this.set = new StateSet();
         }
 
-        public void test__it_should_add_size() throws Exception {
+        public void test__it_should_add_size() {
             this.set.add(this.state1);
             assertEquals(1, this.set.size());
             assertTrue(this.set.contains(this.state1));
@@ -42,7 +42,7 @@ public class StateSetTest {
             assertTrue(this.set.contains(this.state2));
         }
 
-        public void test__it_should_not_add_already_added_state() throws Exception {
+        public void test__it_should_not_add_already_added_state() {
             this.set.add(this.state1);
             assertEquals(1, this.set.size());
             this.set.add(this.state1);
@@ -62,12 +62,12 @@ public class StateSetTest {
             this.set = new StateSet();
         }
 
-        public void test__it_should_include_added_state() throws Exception {
+        public void test__it_should_include_added_state() {
             this.set.add(this.state1);
             assertTrue(set.contains(state1));
         }
 
-        public void test__it_should_not_include_not_added_state() throws Exception {
+        public void test__it_should_not_include_not_added_state() {
             assertFalse(this.set.contains(this.state1));
             this.set.add(this.state1);
             assertFalse(this.set.contains(this.state2));
@@ -86,7 +86,7 @@ public class StateSetTest {
             this.set = new StateSet();
         }
 
-        public void test__it_should_reduce_size() throws Exception {
+        public void test__it_should_reduce_size() {
             this.set.add(this.state1);
             this.set.add(this.state2);
             assertEquals(2, this.set.size());
@@ -98,12 +98,29 @@ public class StateSetTest {
             assertEquals(0, this.set.size());
         }
 
-        public void test__it_should_raise_error_when_deleting_non_existing_state() throws Exception {
+        public void test__it_should_raise_error_when_deleting_non_existing_state() {
             this.set.add(this.state1);
             assertEquals(1, this.set.size());
             if (this.set.remove(this.state2))
                 fail("Should not remove");
             assertEquals(1, this.set.size());
+        }
+
+    }
+
+    public static class SetFunctionality extends TestCase {
+
+        private State state1, state2;
+        private StateSet set;
+
+        public void setUp() {
+            this.state1 = createMock(State.class);
+            this.state2 = createMock(State.class);
+            this.set = new StateSet();
+        }
+
+        public void test__it_should_return_array() {
+            assertEquals(0, this.set.toArray().length);
         }
 
     }
