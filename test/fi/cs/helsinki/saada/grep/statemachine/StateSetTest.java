@@ -106,6 +106,13 @@ public class StateSetTest {
             assertEquals(1, this.set.size());
         }
 
+        public void test__it_should_remove_all_when_cleared() {
+            this.set.add(this.state1);
+            assertEquals(1, this.set.size());
+            this.set.clear();
+            assertEquals(0, this.set.size());
+        }
+
     }
 
     public static class SetFunctionality extends TestCase {

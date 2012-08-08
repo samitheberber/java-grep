@@ -10,11 +10,12 @@ public class StateSet implements DeltaResult, Set<State> {
     private State[] states;
 
     public StateSet() {
-        this.count = 0;
-        this.states = new State[1];
+        clear();
     }
 
     public void clear() {
+        this.count = 0;
+        this.states = new State[1];
     }
 
     public boolean removeAll(Collection states) {
