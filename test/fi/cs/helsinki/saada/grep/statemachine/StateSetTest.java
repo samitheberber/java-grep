@@ -167,6 +167,14 @@ public class StateSetTest {
             assertEquals(0, this.set.toArray().length);
         }
 
+        public void test__it_should_iterate() {
+            this.set.add(state1);
+            this.set.add(state2);
+            for (State state : this.set) {
+                assertNotNull(state);
+            }
+        }
+
     }
 
 }

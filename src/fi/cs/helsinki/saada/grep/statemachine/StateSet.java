@@ -26,8 +26,8 @@ public class StateSet implements DeltaResult, Set<State> {
         return changed_state;
     }
 
-    public boolean retainAll(Collection states) {
-        return false;
+    public boolean retainAll(Collection states) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException();
     }
 
     public boolean addAll(Collection<? extends State> states) {
@@ -80,7 +80,25 @@ public class StateSet implements DeltaResult, Set<State> {
     }
 
     public Iterator<State> iterator() {
-        return null;
+        return new Iterator<State>() {
+            private int currentIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex < size() && states[currentIndex] != null;
+            }
+
+            @Override
+            public State next() {
+                return states[currentIndex++];
+            }
+
+            @Override
+            public void remove() {
+                // TODO Auto-generated method stub
+            }
+
+        };
     }
 
     public boolean contains(Object state) {
