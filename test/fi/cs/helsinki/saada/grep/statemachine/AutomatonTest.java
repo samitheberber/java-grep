@@ -14,11 +14,7 @@ public class AutomatonTest {
 
     public static class ExampleAutomaton extends TestCase {
 
-        private class ExampleDelta implements Delta {
-
-            public DeltaResult calculate(State state, char character) {
-                return null;
-            }
+        private class ExampleDelta extends AbstractDelta {
         }
 
         private class PlainAutomaton extends AbstractAutomaton {
@@ -45,7 +41,7 @@ public class AutomatonTest {
             this.startingState = createMock(State.class);
             this.states = createMock(StateSet.class);
             this.acceptingStates = createMock(StateSet.class);
-            this.delta = createMock(Delta.class);
+            this.delta = createMock(ExampleDelta.class);
             this.vocabulary = createMock(Vocabulary.class);
         }
 
