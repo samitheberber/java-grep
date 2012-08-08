@@ -30,11 +30,7 @@ public class AutomatonTest {
                     State startingState,
                     StateSet acceptingStates
                     ) {
-                this.setStates(states);
-                this.setVocabulary(vocabulary);
-                this.setDelta(delta);
-                this.setAcceptingStates(acceptingStates);
-                this.setCurrentStates((StateSet) delta.calculate(startingState, Vocabulary.EPSILON));
+                super(states, vocabulary, delta, startingState, acceptingStates);
             }
 
         }
@@ -53,15 +49,12 @@ public class AutomatonTest {
             this.vocabulary = createMock(Vocabulary.class);
         }
 
-        public void test__starting_state_should_belongs_to_first_states() throws Exception {
+        public void test__can_be_constructed() throws Exception {
             StateSet startingStates = new StateSet();
             startingStates.add(this.startingState);
-            expect(this.delta.calculate(this.startingState, Vocabulary.EPSILON)).andReturn(startingStates);
-            replay(this.delta);
             Automaton automate = new PlainAutomaton(this.states, this.vocabulary, this.delta, this.startingState, this.acceptingStates);
-            assertNotNull(automate.currentStates());
-            assertTrue(automate.currentStates().contains(this.startingState));
-            verify(this.delta);
+            assertNotNull(automate.getCurrentStates());
+            assertTrue(automate.getCurrentStates().contains(this.startingState));
         }
 
     }

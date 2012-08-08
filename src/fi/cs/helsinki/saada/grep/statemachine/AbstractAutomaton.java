@@ -8,12 +8,21 @@ public abstract class AbstractAutomaton implements Automaton {
     private StateSet acceptingStates;
     private StateSet currentStates;
 
-    public StateSet currentStates() {
+    public AbstractAutomaton(StateSet states, Vocabulary vocabulary, Delta delta, State start, StateSet acceptingStates) {
+        this.states = states;
+        this.vocabulary = vocabulary;
+        this.delta = delta;
+        this.currentStates = new StateSet();
+        this.currentStates.add(start);
+        this.acceptingStates = acceptingStates;
+    }
+
+    public StateSet getCurrentStates() throws Exception {
         return this.currentStates;
     }
 
-    public State currentState() throws Exception {
-        throw new Exception("use currentStates()");
+    public State getCurrentState() throws Exception {
+        throw new Exception("use getCurrentStates()");
     }
 
     protected void setStates(StateSet states) {
@@ -24,12 +33,12 @@ public abstract class AbstractAutomaton implements Automaton {
         this.vocabulary = vocabulary;
     }
 
-    protected void setDelta(Delta delta) {
-        this.delta = delta;
+    protected DeltaResult delta(State state, char letter) {
+        return this.delta.calculate(state, letter);
     }
 
-    protected void setAcceptingStates(StateSet acceptingStates) {
-        this.acceptingStates = acceptingStates;
+    protected StateSet getAcceptingStates() {
+        return this.acceptingStates;
     }
 
     protected void setCurrentStates(StateSet currentStates) {

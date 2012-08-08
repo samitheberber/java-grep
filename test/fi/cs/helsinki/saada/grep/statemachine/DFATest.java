@@ -55,8 +55,6 @@ public class DFATest {
         }
 
         public void test__further_state_accepts_and_automate_runs_successful_with_string_that_belongs_to_the_language() throws Exception {
-            belongsToVocabulary("foobar");
-            replay(this.sigma);
             expect(this.delta.calculate(this.q0, 'f')).andReturn(this.q0);
             expect(this.delta.calculate(this.q0, 'o')).andReturn(this.q1);
             expect(this.delta.calculate(this.q1, 'o')).andReturn(this.q3);
@@ -64,91 +62,25 @@ public class DFATest {
             expect(this.delta.calculate(this.q1, 'a')).andReturn(this.q0);
             expect(this.delta.calculate(this.q0, 'r')).andReturn(this.q2);
             replay(this.delta);
-            State[] q_states = {q0, q0, q1, q1, q2, q3};
-            stateSetIncludes(Q, q_states);
-            replay(this.Q);
             stateSetIncludes(F, q2);
             replay(this.F);
             assertTrue(this.automate.run("foobar"));
-            verify(this.sigma);
             verify(this.delta);
-            verify(this.Q);
             verify(this.F);
         }
 
         public void test__further_state_rejects_and_automate_runs_unsuccessful_with_string_that_doesnt_belong_to_the_language() throws Exception {
-            belongsToVocabulary("fobar");
-            replay(this.sigma);
             expect(this.delta.calculate(this.q0, 'f')).andReturn(this.q0);
             expect(this.delta.calculate(this.q0, 'o')).andReturn(this.q1);
             expect(this.delta.calculate(this.q1, 'b')).andReturn(this.q3);
             expect(this.delta.calculate(this.q3, 'a')).andReturn(this.q2);
             expect(this.delta.calculate(this.q2, 'r')).andReturn(this.q3);
             replay(this.delta);
-            State[] q_states = {q0, q1, q2, q3, q3};
-            stateSetIncludes(Q, q_states);
-            replay(this.Q);
             stateSetIncludesNot(F, q3);
             replay(this.F);
             assertFalse(this.automate.run("fobar"));
-            verify(this.sigma);
             verify(this.delta);
-            verify(this.Q);
             verify(this.F);
-        }
-
-        public void test__met_not_belonging_state_so_panic() {
-            State q4 = createMock(State.class);
-            belongsToVocabulary("fu");
-            replay(this.sigma);
-            expect(this.delta.calculate(this.q0, 'f')).andReturn(this.q0);
-            expect(this.delta.calculate(this.q0, 'u')).andReturn(q4);
-            replay(this.delta);
-            stateSetIncludes(Q, q0);
-            stateSetIncludesNot(Q, q4);
-            replay(this.Q);
-            try {
-                this.automate.run("fubar");
-                fail("Exception must be raised");
-            } catch(Exception e) {
-                verify(this.sigma);
-                verify(this.delta);
-                verify(this.Q);
-            }
-        }
-
-        public void test__met_not_belonging_char_so_panic() {
-            State q4 = createMock(State.class);
-            belongsToVocabulary("f");
-            notBelongsToVocabulary("u");
-            replay(this.sigma);
-            expect(this.delta.calculate(this.q0, 'f')).andReturn(this.q0);
-            replay(this.delta);
-            stateSetIncludes(Q, q0);
-            replay(this.Q);
-            try {
-                this.automate.run("fubar");
-                fail("Exception must be raised");
-            } catch(Exception e) {
-                verify(this.sigma);
-                verify(this.delta);
-                verify(this.Q);
-            }
-        }
-
-        private void belongsToVocabulary(String string, boolean including) {
-            char[] letters = string.toCharArray();
-            for (char letter : letters) {
-                expect(this.sigma.includes(letter)).andReturn(including);
-            }
-        }
-
-        private void belongsToVocabulary(String string) {
-            belongsToVocabulary(string, true);
-        }
-
-        private void notBelongsToVocabulary(String string) {
-            belongsToVocabulary(string, false);
         }
 
         private void stateSetIncludes(StateSet set, State[] states, boolean including) {

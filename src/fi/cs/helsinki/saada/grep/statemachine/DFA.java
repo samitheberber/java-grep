@@ -2,42 +2,28 @@ package fi.cs.helsinki.saada.grep.statemachine;
 
 public class DFA extends AbstractAutomaton {
 
-    private StateSet states;
-    private Vocabulary vocabulary;
-    private DeltaDFA delta;
-    private State start;
-    private StateSet goals;
-
     public DFA(StateSet states, Vocabulary vocabulary, DeltaDFA delta, State start, StateSet goals) {
-        this.states = states;
-        this.vocabulary = vocabulary;
-        this.delta = delta;
-        this.start = start;
-        this.goals = goals;
+        super(states, vocabulary, delta, start, goals);
     }
 
     public boolean run(String characters) throws Exception {
-        return this.goals.contains(this.result(characters));
+        return this.getAcceptingStates().contains(this.result(characters));
     }
 
     private State result(String characters) throws Exception {
-        State current = this.start;
+        State current = this.getCurrentState();
         for(char c : characters.toCharArray()) {
-            this.validateInput(c);
-            current = (State) this.delta.calculate(current, c);
-            this.ensure(current);
+            current = (State) this.delta(current, c);
         }
         return current;
     }
 
-    private void validateInput(char c) throws Exception {
-        if (!this.vocabulary.includes(c))
-            throw new Exception("Character not in vocabulary");
+    public State getCurrentState() throws Exception {
+        return (State) super.getCurrentStates().toArray()[0];
     }
 
-    private void ensure(State state) throws Exception {
-        if (!this.states.contains(state))
-            throw new Exception("Undeclared state met");
+    public StateSet getCurrentStates() throws Exception {
+        throw new Exception("use getCurrentState()");
     }
 
 }

@@ -2,7 +2,7 @@ package fi.cs.helsinki.saada.grep.statemachine;
 
 public interface Automaton {
 
-    public StateSet currentStates() throws Exception;
-    public State currentState() throws Exception;
+    public StateSet getCurrentStates() throws Exception;
+    public State getCurrentState() throws Exception;
 
 }
