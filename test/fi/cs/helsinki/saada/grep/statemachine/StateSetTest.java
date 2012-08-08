@@ -61,7 +61,7 @@ public class StateSetTest {
 
     }
 
-    public static class Including extends TestCase {
+    public static class Containing extends TestCase {
 
         private State state1, state2;
         private StateSet set;
@@ -72,15 +72,32 @@ public class StateSetTest {
             this.set = new StateSet();
         }
 
-        public void test__it_should_include_added_state() {
+        public void test__it_should_contain_added_state() {
             this.set.add(this.state1);
             assertTrue(set.contains(state1));
         }
 
-        public void test__it_should_not_include_not_added_state() {
+        public void test__it_should_not_contain_not_added_state() {
             assertFalse(this.set.contains(this.state1));
             this.set.add(this.state1);
             assertFalse(this.set.contains(this.state2));
+        }
+
+        public void test__it_should_contain_states_from_collection() {
+            this.set.add(state1);
+            this.set.add(state2);
+            LinkedList<State> collection = new LinkedList<State>();
+            collection.add(state1);
+            collection.add(state2);
+            assertTrue(this.set.containsAll(collection));
+        }
+
+        public void test__it_should_not_contain_states_from_collection() {
+            this.set.add(state1);
+            LinkedList<State> collection = new LinkedList<State>();
+            collection.add(state1);
+            collection.add(state2);
+            assertFalse(this.set.containsAll(collection));
         }
 
     }

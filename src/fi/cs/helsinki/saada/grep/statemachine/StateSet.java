@@ -39,7 +39,11 @@ public class StateSet implements DeltaResult, Set<State> {
     }
 
     public boolean containsAll(Collection states) {
-        return false;
+        for (Object state : states) {
+            if (!this.contains(state))
+                return false;
+        }
+        return true;
     }
 
     public boolean remove(Object state) {
