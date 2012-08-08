@@ -1,54 +1,66 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package fi.cs.helsinki.saada.grep.statemachine;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import static org.easymock.EasyMock.createMock;
+import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 
+/**
+ *
+ * @author stb
+ */
 public class AutomatonTest {
 
-    public static Test suite() {
-        return new TestSuite(AutomatonTest.class.getDeclaredClasses());
+    private class AutomatonImpl extends AbstractAutomaton {
+
+        public AutomatonImpl(StateSet states, Vocabulary vocabulary, Delta delta, State start, StateSet goals) {
+            super(states, vocabulary, delta, start, goals);
+        }
     }
 
-    public static class ExampleAutomaton extends TestCase {
+    private StateSet states, acceptingStates;
+    private State startingState;
+    private Delta delta;
+    private Vocabulary vocabulary;
+    private Automaton automaton;
 
-        private class ExampleDelta extends AbstractDelta {
-        }
+    @Before
+    public void setUp() throws Exception {
+        this.states = createMock(StateSet.class);
+        this.vocabulary = createMock(Vocabulary.class);
+        this.delta = createMock(Delta.class);
+        this.startingState = createMock(State.class);
+        this.acceptingStates = createMock(StateSet.class);
 
-        private class PlainAutomaton extends AbstractAutomaton {
-
-            public PlainAutomaton(
-                    StateSet states,
-                    Vocabulary vocabulary,
-                    Delta delta,
-                    State startingState,
-                    StateSet acceptingStates
-                    ) {
-                super(states, vocabulary, delta, startingState, acceptingStates);
-            }
-
-        }
-
-        private StateSet states;
-        private StateSet acceptingStates;
-        private State startingState;
-        private Delta delta;
-        private Vocabulary vocabulary;
-
-        @Override
-        public void setUp() {
-            this.startingState = createMock(State.class);
-            this.states = createMock(StateSet.class);
-            this.acceptingStates = createMock(StateSet.class);
-            this.delta = createMock(ExampleDelta.class);
-            this.vocabulary = createMock(Vocabulary.class);
-        }
-
-        public void test__can_be_constructed() throws Exception {
-            Automaton automate = new PlainAutomaton(this.states, this.vocabulary, this.delta, this.startingState, this.acceptingStates);
-        }
-
+        this.automaton = new AutomatonImpl(this.states, this.vocabulary, this.delta, this.startingState, this.acceptingStates);
     }
 
+    @Test
+    public void states_should_be_given() {
+        assertEquals(states, automaton.getStates());
+    }
+
+    @Test
+    public void vocabulary_should_be_given() {
+        assertEquals(vocabulary, automaton.getVocabulary());
+    }
+
+    @Test
+    public void delta_should_be_given() {
+        assertEquals(delta, automaton.getDelta());
+    }
+
+    @Test
+    public void starting_state_should_be_given() {
+        assertEquals(startingState, automaton.getStartingState());
+    }
+
+    @Test
+    public void accepting_states_should_be_given() {
+        assertEquals(acceptingStates, automaton.getAcceptingStates());
+    }
 }
