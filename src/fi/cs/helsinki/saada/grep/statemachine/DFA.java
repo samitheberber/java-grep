@@ -17,7 +17,7 @@ public class DFA extends AbstractAutomaton {
     }
 
     public boolean run(String characters) throws Exception {
-        return this.goals.includes(this.result(characters));
+        return this.goals.contains(this.result(characters));
     }
 
     private State result(String characters) throws Exception {
@@ -36,7 +36,7 @@ public class DFA extends AbstractAutomaton {
     }
 
     private void ensure(State state) throws Exception {
-        if (!this.states.includes(state))
+        if (!this.states.contains(state))
             throw new Exception("Undeclared state met");
     }
 

@@ -166,7 +166,7 @@ public class DFATest {
         }
 
         private void stateSetIncludes(StateSet set, State state, boolean including) {
-            expect(set.includes(state)).andReturn(including);
+            expect(set.contains(state)).andReturn(including);
         }
 
         private void stateSetIncludes(StateSet set, State state) {

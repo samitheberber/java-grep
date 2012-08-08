@@ -60,7 +60,7 @@ public class AutomatonTest {
             replay(this.delta);
             Automaton automate = new PlainAutomaton(this.states, this.vocabulary, this.delta, this.startingState, this.acceptingStates);
             assertNotNull(automate.currentStates());
-            assertTrue(automate.currentStates().includes(this.startingState));
+            assertTrue(automate.currentStates().contains(this.startingState));
             verify(this.delta);
         }
 
