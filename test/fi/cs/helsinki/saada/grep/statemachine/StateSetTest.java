@@ -36,8 +36,10 @@ public class StateSetTest {
         public void test__it_should_add_size() throws Exception {
             this.set.add(this.state1);
             assertEquals(1, this.set.size());
+            assertTrue(this.set.contains(this.state1));
             this.set.add(this.state2);
             assertEquals(2, this.set.size());
+            assertTrue(this.set.contains(this.state2));
         }
 
         public void test__it_should_not_add_already_added_state() throws Exception {
@@ -62,7 +64,7 @@ public class StateSetTest {
 
         public void test__it_should_include_added_state() throws Exception {
             this.set.add(this.state1);
-            assertTrue(this.set.contains(this.state1));
+            assertTrue(set.contains(state1));
         }
 
         public void test__it_should_not_include_not_added_state() throws Exception {
