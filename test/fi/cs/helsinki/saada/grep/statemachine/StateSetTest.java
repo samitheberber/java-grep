@@ -123,6 +123,16 @@ public class StateSetTest {
             assertEquals(0, this.set.size());
         }
 
+        public void test__it_should_remove_states_from_collection() {
+            this.set.add(state1);
+            this.set.add(state2);
+            LinkedList<State> collection = new LinkedList<State>();
+            collection.add(state1);
+            collection.add(state2);
+            assertTrue(this.set.removeAll(collection));
+            assertEquals(0, this.set.size());
+        }
+
     }
 
     public static class SetFunctionality extends TestCase {

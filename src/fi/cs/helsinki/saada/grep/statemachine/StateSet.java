@@ -19,7 +19,11 @@ public class StateSet implements DeltaResult, Set<State> {
     }
 
     public boolean removeAll(Collection states) {
-        return false;
+        boolean changed_state = false;
+        for (Object state : states) {
+            changed_state = this.remove(state) || changed_state;
+        }
+        return changed_state;
     }
 
     public boolean retainAll(Collection states) {
