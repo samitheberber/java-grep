@@ -1,8 +1,8 @@
 package fi.cs.helsinki.saada.grep.statemachine;
 
-import java.util.Set;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Set;
 
 public class StateSet implements DeltaResult, Set<State> {
 
@@ -13,11 +13,13 @@ public class StateSet implements DeltaResult, Set<State> {
         clear();
     }
 
+    @Override
     public void clear() {
         this.count = 0;
         this.states = new State[1];
     }
 
+    @Override
     public boolean removeAll(Collection states) {
         boolean changed_state = false;
         for (Object state : states) {
@@ -26,10 +28,12 @@ public class StateSet implements DeltaResult, Set<State> {
         return changed_state;
     }
 
+    @Override
     public boolean retainAll(Collection states) throws UnsupportedOperationException {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean addAll(Collection<? extends State> states) {
         boolean changed_state = false;
         for (State state : states) {
@@ -38,6 +42,7 @@ public class StateSet implements DeltaResult, Set<State> {
         return changed_state;
     }
 
+    @Override
     public boolean containsAll(Collection states) {
         for (Object state : states) {
             if (!this.contains(state))
@@ -46,6 +51,7 @@ public class StateSet implements DeltaResult, Set<State> {
         return true;
     }
 
+    @Override
     public boolean remove(Object state) {
         int removed_index = this.index(state);
         if (removed_index == -1)
@@ -58,6 +64,7 @@ public class StateSet implements DeltaResult, Set<State> {
         return true;
     }
 
+    @Override
     public boolean add(State state) {
         if (this.contains(state)) {
             return false;
@@ -67,6 +74,7 @@ public class StateSet implements DeltaResult, Set<State> {
         }
     }
 
+    @Override
     public <T> T[] toArray(T[] type_array) {
         T[] states_copy = (T[]) new Object[this.size()];
         for(int i=0; i < this.size(); i++) {
@@ -75,10 +83,12 @@ public class StateSet implements DeltaResult, Set<State> {
         return states_copy;
     }
 
+    @Override
     public Object[] toArray() {
         return toArray(new Object[0]);
     }
 
+    @Override
     public Iterator<State> iterator() {
         return new Iterator<State>() {
             private int currentIndex = 0;
@@ -101,14 +111,17 @@ public class StateSet implements DeltaResult, Set<State> {
         };
     }
 
+    @Override
     public boolean contains(Object state) {
         return (this.index(state) != -1);
     }
 
+    @Override
     public boolean isEmpty() {
         return this.size() == 0;
     }
 
+    @Override
     public int size() {
         return this.count;
     }
@@ -136,9 +149,7 @@ public class StateSet implements DeltaResult, Set<State> {
 
     private void alterStates(int size) {
         State[] newStates = new State[size];
-        for(int i=0; i < this.size(); i++) {
-            newStates[i] = this.states[i];
-        }
+        System.arraycopy(this.states, 0, newStates, 0, this.size());
         this.states = newStates;
     }
 

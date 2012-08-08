@@ -3,8 +3,7 @@ package fi.cs.helsinki.saada.grep.statemachine;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import static org.easymock.EasyMock.*;
+import static org.easymock.EasyMock.createMock;
 
 public class AutomatonTest {
 
@@ -37,6 +36,7 @@ public class AutomatonTest {
         private Delta delta;
         private Vocabulary vocabulary;
 
+        @Override
         public void setUp() {
             this.startingState = createMock(State.class);
             this.states = createMock(StateSet.class);

@@ -3,8 +3,7 @@ package fi.cs.helsinki.saada.grep.statemachine;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import static org.easymock.EasyMock.*;
+import static org.easymock.EasyMock.createMock;
 
 public class DeltaTest {
 
@@ -23,6 +22,7 @@ public class DeltaTest {
 
         private Delta delta;
 
+        @Override
         public void setUp() {
             this.delta = new PlainDelta();
         }

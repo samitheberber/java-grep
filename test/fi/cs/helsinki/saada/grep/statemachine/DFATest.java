@@ -3,8 +3,7 @@ package fi.cs.helsinki.saada.grep.statemachine;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import static org.easymock.EasyMock.*;
+import static org.easymock.EasyMock.createMock;
 
 public class DFATest {
 
@@ -24,6 +23,7 @@ public class DFATest {
         private State q3;
         private DFA automate;
 
+        @Override
         public void setUp() {
             this.Q = createMock(StateSet.class);
             this.F = createMock(StateSet.class);

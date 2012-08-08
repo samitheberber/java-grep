@@ -1,12 +1,10 @@
 package fi.cs.helsinki.saada.grep.statemachine;
 
+import java.util.LinkedList;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import static org.easymock.EasyMock.*;
-
-import java.util.LinkedList;
+import static org.easymock.EasyMock.createMock;
 
 public class StateSetTest {
 
@@ -29,6 +27,7 @@ public class StateSetTest {
         private State state1, state2;
         private StateSet set;
 
+        @Override
         public void setUp() {
             this.state1 = createMock(State.class);
             this.state2 = createMock(State.class);
@@ -66,6 +65,7 @@ public class StateSetTest {
         private State state1, state2;
         private StateSet set;
 
+        @Override
         public void setUp() {
             this.state1 = createMock(State.class);
             this.state2 = createMock(State.class);
@@ -107,6 +107,7 @@ public class StateSetTest {
         private State state1, state2;
         private StateSet set;
 
+        @Override
         public void setUp() {
             this.state1 = createMock(State.class);
             this.state2 = createMock(State.class);
@@ -157,6 +158,7 @@ public class StateSetTest {
         private State state1, state2;
         private StateSet set;
 
+        @Override
         public void setUp() {
             this.state1 = createMock(State.class);
             this.state2 = createMock(State.class);

@@ -16,22 +16,27 @@ public abstract class AbstractAutomaton implements Automaton {
         this.acceptingStates = acceptingStates;
     }
 
+    @Override
     public StateSet getStates() {
         return this.states;
     }
 
+    @Override
     public Vocabulary getVocabulary() {
         return this.vocabulary;
     }
 
+    @Override
     public Delta getDelta() {
         return this.delta;
     }
 
+    @Override
     public State getStartingState() {
         return this.startingState;
     }
 
+    @Override
     public StateSet getAcceptingStates() {
         return this.acceptingStates;
     }
