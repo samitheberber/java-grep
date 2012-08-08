@@ -6,6 +6,8 @@ import junit.framework.TestSuite;
 
 import static org.easymock.EasyMock.*;
 
+import java.util.LinkedList;
+
 public class StateSetTest {
 
     public static Test suite() {
@@ -16,7 +18,8 @@ public class StateSetTest {
 
         public void test__it_should_be_empty() {
             StateSet set = new StateSet();
-            assertEquals(0, set.count());
+            assertEquals(0, set.size());
+            assertTrue(set.isEmpty());
         }
 
     }
@@ -32,27 +35,33 @@ public class StateSetTest {
             this.set = new StateSet();
         }
 
-        public void test__it_should_add_count() throws Exception {
+        public void test__it_should_add_size() {
             this.set.add(this.state1);
-            assertEquals(1, this.set.count());
+            assertEquals(1, this.set.size());
+            assertTrue(this.set.contains(this.state1));
             this.set.add(this.state2);
-            assertEquals(2, this.set.count());
+            assertEquals(2, this.set.size());
+            assertTrue(this.set.contains(this.state2));
         }
 
-        public void test__it_should_not_add_already_added_state() throws Exception {
+        public void test__it_should_not_add_already_added_state() {
             this.set.add(this.state1);
-            assertEquals(1, this.set.count());
-            try {
-                this.set.add(this.state1);
-                fail("Should throw exception");
-            } catch(Exception e) {
-            }
-            assertEquals(1, this.set.count());
+            assertEquals(1, this.set.size());
+            this.set.add(this.state1);
+            assertEquals(1, this.set.size());
+        }
+
+        public void test__it_should_insert_states_from_collection() {
+            LinkedList<State> collection = new LinkedList<State>();
+            collection.add(state1);
+            collection.add(state2);
+            assertTrue(this.set.addAll(collection));
+            assertEquals(2, this.set.size());
         }
 
     }
 
-    public static class Including extends TestCase {
+    public static class Containing extends TestCase {
 
         private State state1, state2;
         private StateSet set;
@@ -63,15 +72,32 @@ public class StateSetTest {
             this.set = new StateSet();
         }
 
-        public void test__it_should_include_added_state() throws Exception {
+        public void test__it_should_contain_added_state() {
             this.set.add(this.state1);
-            assertTrue(this.set.includes(this.state1));
+            assertTrue(set.contains(state1));
         }
 
-        public void test__it_should_not_include_not_added_state() throws Exception {
-            assertFalse(this.set.includes(this.state1));
+        public void test__it_should_not_contain_not_added_state() {
+            assertFalse(this.set.contains(this.state1));
             this.set.add(this.state1);
-            assertFalse(this.set.includes(this.state2));
+            assertFalse(this.set.contains(this.state2));
+        }
+
+        public void test__it_should_contain_states_from_collection() {
+            this.set.add(state1);
+            this.set.add(state2);
+            LinkedList<State> collection = new LinkedList<State>();
+            collection.add(state1);
+            collection.add(state2);
+            assertTrue(this.set.containsAll(collection));
+        }
+
+        public void test__it_should_not_contain_states_from_collection() {
+            this.set.add(state1);
+            LinkedList<State> collection = new LinkedList<State>();
+            collection.add(state1);
+            collection.add(state2);
+            assertFalse(this.set.containsAll(collection));
         }
 
     }
@@ -87,33 +113,66 @@ public class StateSetTest {
             this.set = new StateSet();
         }
 
-        public void test__it_should_reduce_count() throws Exception {
+        public void test__it_should_reduce_size() {
             this.set.add(this.state1);
             this.set.add(this.state2);
-            assertEquals(2, this.set.count());
-            try {
-                this.set.delete(this.state1);
-            } catch(Exception e) {
+            assertEquals(2, this.set.size());
+            if (!this.set.remove(this.state1))
                 fail("First state deleting failed");
-            }
-            assertEquals(1, this.set.count());
-            try {
-                this.set.delete(this.state2);
-            } catch(Exception e) {
+            assertEquals(1, this.set.size());
+            if (!this.set.remove(this.state2))
                 fail("Second state deleting failed");
-            }
-            assertEquals(0, this.set.count());
+            assertEquals(0, this.set.size());
         }
 
-        public void test__it_should_raise_error_when_deleting_non_existing_state() throws Exception {
+        public void test__it_should_raise_error_when_deleting_non_existing_state() {
             this.set.add(this.state1);
-            assertEquals(1, this.set.count());
-            try {
-                this.set.delete(this.state2);
-                fail("Should throw exception");
-            } catch(Exception e) {
+            assertEquals(1, this.set.size());
+            if (this.set.remove(this.state2))
+                fail("Should not remove");
+            assertEquals(1, this.set.size());
+        }
+
+        public void test__it_should_remove_all_when_cleared() {
+            this.set.add(this.state1);
+            assertEquals(1, this.set.size());
+            this.set.clear();
+            assertEquals(0, this.set.size());
+        }
+
+        public void test__it_should_remove_states_from_collection() {
+            this.set.add(state1);
+            this.set.add(state2);
+            LinkedList<State> collection = new LinkedList<State>();
+            collection.add(state1);
+            collection.add(state2);
+            assertTrue(this.set.removeAll(collection));
+            assertEquals(0, this.set.size());
+        }
+
+    }
+
+    public static class SetFunctionality extends TestCase {
+
+        private State state1, state2;
+        private StateSet set;
+
+        public void setUp() {
+            this.state1 = createMock(State.class);
+            this.state2 = createMock(State.class);
+            this.set = new StateSet();
+        }
+
+        public void test__it_should_return_array() {
+            assertEquals(0, this.set.toArray().length);
+        }
+
+        public void test__it_should_iterate() {
+            this.set.add(state1);
+            this.set.add(state2);
+            for (State state : this.set) {
+                assertNotNull(state);
             }
-            assertEquals(1, this.set.count());
         }
 
     }

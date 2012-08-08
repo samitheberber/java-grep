@@ -12,42 +12,21 @@ public class AutomatonTest {
         return new TestSuite(AutomatonTest.class.getDeclaredClasses());
     }
 
-    public static class Initializing extends TestCase {
+    public static class ExampleAutomaton extends TestCase {
 
-        private class Delta {
-
-            public StateSet calculate(State state, String characters) {
-                return null;
-            }
+        private class ExampleDelta extends AbstractDelta {
         }
 
-        private class Language {
-        }
+        private class PlainAutomaton extends AbstractAutomaton {
 
-        private class Automaton {
-
-            private StateSet states;
-            private Language language;
-            private Delta delta;
-            private StateSet acceptingStates;
-            private StateSet currentStates;
-
-            public Automaton(
+            public PlainAutomaton(
                     StateSet states,
-                    Language language,
+                    Vocabulary vocabulary,
                     Delta delta,
                     State startingState,
                     StateSet acceptingStates
                     ) {
-                this.states = states;
-                this.language = language;
-                this.delta = delta;
-                this.acceptingStates = acceptingStates;
-                this.currentStates = this.delta.calculate(startingState, null);
-            }
-
-            public StateSet currentStates() {
-                return this.currentStates;
+                super(states, vocabulary, delta, startingState, acceptingStates);
             }
 
         }
@@ -56,25 +35,18 @@ public class AutomatonTest {
         private StateSet acceptingStates;
         private State startingState;
         private Delta delta;
-        private Language language;
+        private Vocabulary vocabulary;
 
         public void setUp() {
             this.startingState = createMock(State.class);
             this.states = createMock(StateSet.class);
             this.acceptingStates = createMock(StateSet.class);
-            this.delta = createMock(Delta.class);
-            this.language = createMock(Language.class);
+            this.delta = createMock(ExampleDelta.class);
+            this.vocabulary = createMock(Vocabulary.class);
         }
 
-        public void test__starting_state_should_belongs_to_first_states() throws Exception {
-            StateSet startingStates = new StateSet();
-            startingStates.add(this.startingState);
-            expect(this.delta.calculate(this.startingState, null)).andReturn(startingStates);
-            replay(this.delta);
-            Automaton automate = new Automaton(this.states, this.language, this.delta, this.startingState, this.acceptingStates);
-            assertNotNull(automate.currentStates());
-            assertTrue(automate.currentStates().includes(this.startingState));
-            verify(this.delta);
+        public void test__can_be_constructed() throws Exception {
+            Automaton automate = new PlainAutomaton(this.states, this.vocabulary, this.delta, this.startingState, this.acceptingStates);
         }
 
     }
