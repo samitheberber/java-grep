@@ -23,6 +23,10 @@ public class StateTransitionTest {
         public boolean add(State from, char character, StateTransitionResult to) {
             return true;
         }
+
+        public boolean contains(State from, char character) {
+            return true;
+        }
     }
 
     private class DeltaImpl extends AbstractStateTransition {
@@ -35,6 +39,11 @@ public class StateTransitionTest {
         @Override
         public boolean add(State from, char character, StateTransitionResult to) {
             return structure.add(from, character, to);
+        }
+
+        @Override
+        public boolean contains(State from, char character) {
+            return structure.contains(from, character);
         }
 
     }
@@ -52,6 +61,7 @@ public class StateTransitionTest {
         State q0 = createMock(State.class);
         StateTransitionResult q1 = createMock(State.class);
         expect(structure.add(q0, 'a', q1)).andReturn(true);
+        expect(structure.contains(q0, 'a')).andReturn(true);
         replay(structure);
         assertTrue(this.delta.add(q0, 'a', q1));
         assertTrue(this.delta.contains(q0, 'a'));
