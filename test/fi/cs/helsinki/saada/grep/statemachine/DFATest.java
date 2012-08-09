@@ -14,7 +14,7 @@ public class DFATest {
     private StateSet Q;
     private StateSet F;
     private Vocabulary sigma;
-    private DeltaDFA delta;
+    private DFAStateTransition delta;
     private State q0;
     private DFA dfa;
 
@@ -22,7 +22,7 @@ public class DFATest {
     public void setUp() throws Exception {
         this.Q = createMock(StateSet.class);
         this.sigma = createMock(Vocabulary.class);
-        this.delta = createMock(DeltaDFA.class);
+        this.delta = createMock(DFAStateTransition.class);
         this.q0 = createMock(State.class);
         this.F = createMock(StateSet.class);
         this.dfa = new DFA(Q, sigma, delta, q0, F);

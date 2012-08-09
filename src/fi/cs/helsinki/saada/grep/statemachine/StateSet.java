@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
-public class StateSet implements DeltaResult, Set<State> {
+public class StateSet implements StateTransitionResult, Set<State> {
 
     private int count;
     private State[] states;

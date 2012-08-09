@@ -1,6 +1,6 @@
 package fi.cs.helsinki.saada.grep.statemachine;
 
-public class State implements DeltaResult {
+public class State implements StateTransitionResult {
 
     private String name;
 

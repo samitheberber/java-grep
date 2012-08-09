@@ -1,12 +1,12 @@
 package fi.cs.helsinki.saada.grep.statemachine;
 
-public abstract class AbstractDelta implements Delta {
+public abstract class AbstractStateTransition implements StateTransition {
 
-    public AbstractDelta() {
+    public AbstractStateTransition() {
     }
 
     @Override
-    public boolean add(State state, char character,  DeltaResult result) {
+    public boolean add(State state, char character,  StateTransitionResult result) {
         return true;
     }
 

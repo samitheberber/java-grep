@@ -5,7 +5,7 @@ public interface Automaton {
     public StateSet getStates();
     public State getStartingState();
     public StateSet getAcceptingStates();
-    public Delta getDelta();
+    public StateTransition getStateTransition();
     public Vocabulary getVocabulary();
 
 }

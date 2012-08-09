@@ -13,14 +13,14 @@ public class AutomatonTest {
 
     private class AutomatonImpl extends AbstractAutomaton {
 
-        public AutomatonImpl(StateSet states, Vocabulary vocabulary, Delta delta, State start, StateSet goals) {
+        public AutomatonImpl(StateSet states, Vocabulary vocabulary, StateTransition delta, State start, StateSet goals) {
             super(states, vocabulary, delta, start, goals);
         }
     }
 
     private StateSet states, acceptingStates;
     private State startingState;
-    private Delta delta;
+    private StateTransition delta;
     private Vocabulary vocabulary;
     private Automaton automaton;
 
@@ -28,7 +28,7 @@ public class AutomatonTest {
     public void setUp() throws Exception {
         this.states = createMock(StateSet.class);
         this.vocabulary = createMock(Vocabulary.class);
-        this.delta = createMock(Delta.class);
+        this.delta = createMock(StateTransition.class);
         this.startingState = createMock(State.class);
         this.acceptingStates = createMock(StateSet.class);
 
@@ -47,7 +47,7 @@ public class AutomatonTest {
 
     @Test
     public void delta_should_be_given() {
-        assertEquals(delta, automaton.getDelta());
+        assertEquals(delta, automaton.getStateTransition());
     }
 
     @Test
