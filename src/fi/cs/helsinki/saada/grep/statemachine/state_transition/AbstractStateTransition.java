@@ -1,4 +1,6 @@
-package fi.cs.helsinki.saada.grep.statemachine;
+package fi.cs.helsinki.saada.grep.statemachine.state_transition;
+
+import fi.cs.helsinki.saada.grep.statemachine.State;
 
 public abstract class AbstractStateTransition implements StateTransition {
 

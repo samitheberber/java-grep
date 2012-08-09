@@ -1,6 +1,6 @@
 package fi.cs.helsinki.saada.grep.statemachine;
 
-class Vocabulary {
+public class Vocabulary {
 
     public final static char EPSILON = '\0';
 

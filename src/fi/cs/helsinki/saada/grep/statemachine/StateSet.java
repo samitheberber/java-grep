@@ -1,5 +1,6 @@
 package fi.cs.helsinki.saada.grep.statemachine;
 
+import fi.cs.helsinki.saada.grep.statemachine.state_transition.StateTransitionResult;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;

@@ -1,5 +1,8 @@
-package fi.cs.helsinki.saada.grep.statemachine;
+package fi.cs.helsinki.saada.grep.statemachine.dfa;
 
+import fi.cs.helsinki.saada.grep.statemachine.State;
+import fi.cs.helsinki.saada.grep.statemachine.StateSet;
+import fi.cs.helsinki.saada.grep.statemachine.Vocabulary;
 import static org.easymock.EasyMock.createMock;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Before;

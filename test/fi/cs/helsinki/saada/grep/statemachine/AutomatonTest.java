@@ -1,5 +1,6 @@
 package fi.cs.helsinki.saada.grep.statemachine;
 
+import fi.cs.helsinki.saada.grep.statemachine.state_transition.StateTransition;
 import static org.easymock.EasyMock.createMock;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;

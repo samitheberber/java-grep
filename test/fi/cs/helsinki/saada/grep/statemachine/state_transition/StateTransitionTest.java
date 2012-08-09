@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package fi.cs.helsinki.saada.grep.statemachine;
+package fi.cs.helsinki.saada.grep.statemachine.state_transition;
 
+import fi.cs.helsinki.saada.grep.statemachine.State;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -14,20 +15,6 @@ import org.junit.Test;
  * @author stb
  */
 public class StateTransitionTest {
-
-    private class StateTransitionStructure {
-
-        public StateTransitionStructure() {
-        }
-
-        public boolean add(State from, char character, StateTransitionResult to) {
-            return true;
-        }
-
-        public boolean contains(State from, char character) {
-            return true;
-        }
-    }
 
     private class DeltaImpl extends AbstractStateTransition {
         private StateTransitionStructure structure;
@@ -48,12 +35,12 @@ public class StateTransitionTest {
 
     }
     private StateTransitionStructure structure;
-    private StateTransition delta;
+    private StateTransition stateTransition;
 
     @Before
     public void setUp() throws Exception {
         this.structure = createMock(StateTransitionStructure.class);
-        this.delta = new DeltaImpl(this.structure);
+        this.stateTransition = new DeltaImpl(this.structure);
     }
 
     @Test
@@ -63,8 +50,8 @@ public class StateTransitionTest {
         expect(structure.add(q0, 'a', q1)).andReturn(true);
         expect(structure.contains(q0, 'a')).andReturn(true);
         replay(structure);
-        assertTrue(this.delta.add(q0, 'a', q1));
-        assertTrue(this.delta.contains(q0, 'a'));
+        assertTrue(stateTransition.add(q0, 'a', q1));
+        assertTrue(stateTransition.contains(q0, 'a'));
         verify(structure);
     }
 }

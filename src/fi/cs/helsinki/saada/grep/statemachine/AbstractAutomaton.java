@@ -1,5 +1,7 @@
 package fi.cs.helsinki.saada.grep.statemachine;
 
+import fi.cs.helsinki.saada.grep.statemachine.state_transition.StateTransition;
+
 public abstract class AbstractAutomaton implements Automaton {
 
     private StateSet states;
