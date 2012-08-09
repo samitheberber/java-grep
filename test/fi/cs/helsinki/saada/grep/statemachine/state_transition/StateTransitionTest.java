@@ -16,21 +16,10 @@ import org.junit.Test;
  */
 public class StateTransitionTest {
 
-    private class DeltaImpl extends AbstractStateTransition {
-        private StateTransitionStructure structure;
+    private class StateTransitionImpl extends AbstractStateTransition {
 
-        public DeltaImpl(StateTransitionStructure structure) {
-            this.structure = structure;
-        }
-
-        @Override
-        public boolean add(State from, char character, StateTransitionResult to) {
-            return structure.add(from, character, to);
-        }
-
-        @Override
-        public boolean contains(State from, char character) {
-            return structure.contains(from, character);
+        public StateTransitionImpl(StateTransitionStructure structure) {
+            super(structure);
         }
 
     }
@@ -40,7 +29,7 @@ public class StateTransitionTest {
     @Before
     public void setUp() throws Exception {
         this.structure = createMock(StateTransitionStructure.class);
-        this.stateTransition = new DeltaImpl(this.structure);
+        this.stateTransition = new StateTransitionImpl(this.structure);
     }
 
     @Test
